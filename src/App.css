@@ -1,5 +1,5 @@
 .App {
-  text-align: center;
+  /* text-align: center; */
   margin: 0 auto;
 }
  
@@ -18,4 +18,9 @@
 .App-link {
   color: #61dafb;
 }
- 
+.active {
+  color: #218f00;
+}
+.active-menu {
+  color: #511de2;
+}

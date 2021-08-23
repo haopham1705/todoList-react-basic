@@ -1,29 +1,38 @@
 import React from "react";
 import { Route, Switch, useRouteMatch } from "react-router";
-import NotFound from "../../components/Not Found";
+import { Link, NavLink } from 'react-router-dom';
+import NotFound from '../../components/NotFound'
 // import TodoList from "./components/TodoList";
 import DetailPage from "./pages/DetailPage";
 import ListPage from "./pages/ListPage";
 
 
-TodoFeatures.propTypes = {
+TodoFeature.propTypes = {}
 
-}
-export default function TodoFeatures(props) {
-  const match = useRouteMatch(); 
+export default function TodoFeature(props) {
+  const match = useRouteMatch(); //nested routing
   
   return (
-  <div>
-    <Switch>
-      <Route path={match.path} component={ListPage} exact/>
-      <Route path={`${match.path}/:todoId`} component={DetailPage} />
-      {/* Not found */}
-      {/* <Route component={NotFound} /> */}
-    </Switch>
-  </div>
+    <div>
+     Todo Main
+      {/* <p>
+        <Link to={match.path}>List Page</Link>
+      </p>
+      <p>
+        <Link to={`${match.path}/123`}>Detail Page</Link>
+      </p> */}
+      <Switch>
+        <Route path={match.path} component={ListPage} exact />
+        <Route path={`${match.path}/:todoId`} component={DetailPage} exact />
+
+        <Route component={NotFound} />
+      </Switch>
+    </div>
   );
 }
 
-{/* <h3>Todo List</h3> 
+{ /* <Route path={match.path} component={ListPage} exact/>
+      <Route path={`${match.path}/:todoId`} component={DetailPage} />  */}
+{/* <h3>Todo List</h3>
     <TodoList todoList={todoList}/> */}
 {/* <Route path="/todo/:todoId" component={DetailPage} /> */ }
