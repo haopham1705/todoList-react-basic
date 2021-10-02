@@ -1,22 +1,43 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
+import classnames from 'classnames';
+import './styles.scss';
 
 // props type --> array
 TodoList.propTypes = {
-  TodoList: PropTypes.array,
+  todoList: PropTypes.array,
+  onTodoClick: PropTypes.func,
 };
 // default value --> []
 TodoList.defaultProps = {
-  TodoList: [],
+  todoList: [],
+  onTodoClick: null,
 };
-function TodoList({ todoList }) {
+
+function TodoList({ todoList, onTodoClick }) {
   //   const {} = props;
+  const handleTodoClick = (todo, idx) => {
+    console.log(todo, idx);
+
+    if (!onTodoClick) return;
+
+    onTodoClick(todo, idx);
+  };
   return (
-    <ul>
-      {todoList.map(todo => (
-          <li key={todo.id}>{todo.title}</li>
-        ))}
-    </ul>  
+    <ul className="todo-list">
+      {todoList.map((todo, idx) => (
+        <li
+          key={todo.id}
+          className={classnames({
+            'todo-item': true,
+            completed: todo.status === 'completed',
+          })}
+          onClick={() => handleTodoClick(todo, idx)}
+        >
+          {todo.title}
+        </li>
+      ))}
+    </ul>
   );
 }
 

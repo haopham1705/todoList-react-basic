@@ -1,36 +1,66 @@
-import { Redirect, Route, Switch } from "react-router";
-import { Link, NavLink } from "react-router-dom";
+import { useEffect } from 'react';
+// import { Redirect, Route, Switch } from 'react-router';
+import {BrowserRouter as Link, NavLink, Redirect, Route, Switch } from 'react-router-dom';
 import './App.css';
-import NotFound from "./components/Not Found";
-import AlbumFeature from "./features/Album";
+import productApi from './api/productApi';
+import NotFound from './components/NotFound';
+import AlbumFeature from './features/Album';
 import TodoFeature from './features/Todo';
+import CounterFeature from './features/Counter'
 
 function App() {
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const params = {
+        _limit: 10,
+      }
+      const productList = await productApi.getAll(params);
+      console.log(productList);
+    };
+    fetchProducts();
+  }, []);
+
   return (
     <div className="App">
       Header
-      
-      {/* <p><Link to="/todo" >Todo</Link></p>
-      <p><Link to="/album" >Album</Link></p> */}
-
-      <p><NavLink to="/todo" activeClassName="active" >Todo</NavLink></p>
-      <p><NavLink to="/album" activeClassName="active" >Album</NavLink></p>
+      <p>
+        <NavLink to="/todos" activeClassName="active">
+          Todos
+        </NavLink>
+      </p>
+      <p>
+        <NavLink to="/albums" activeClassName="menu-active" >
+          Albums
+        </NavLink>
+      </p>
+      <p>
+        <NavLink to="/counter" activeClassName="menu-active" >
+          Counter
+        </NavLink>
+      </p>
       
       <Switch>
-        <Redirect from="/home" to="/" exact/>
-        <Redirect from="/post-list/:postId" to="/posts/:postId" exact /> 
-         
-        <Route path="/" component={TodoFeature} />
-        <Route path="/todo" component={TodoFeature} />
-        <Route path="/album" component={AlbumFeature} />
-
-        {/* Not Found */}
+        <Redirect from="/home" to="/" exact />
+        <Redirect from="/post-list/:postId" to="/posts/:postId" exact />
+  
+        <Route path="/" component={TodoFeature} exact />
+        <Route path="/todos" component={TodoFeature} />
+        <Route path="/albums" component={AlbumFeature} />
+        <Route path="/counter" component={CounterFeature} />
+        
         <Route component={NotFound} />
-      </Switch>
-    
-      Footer 
+      </Switch> 
+      Footer
     </div>
   );
 }
 
 export default App;
+
+
+{/* <p>
+        <Link to="/todos">Todos</Link>
+      </p>
+      <p>
+        <Link to="/albums">Albums</Link>
+      </p> */}
